@@ -1,10 +1,12 @@
-using Plots, SpikingNeuralNetworks; plotly(); #reload("SNN")
+using Plots
+using SpikingNeuralNetworks
+SNN.@load_units
 
-S = SpikingNeuralNetworks.Rate(;N = 200)
-SS = SpikingNeuralNetworks.PINningSynapse(S, S; σ = 1.5, p = 1.0)
+S = SNN.Rate(;N = 200)
+SS = SNN.PINningSynapse(S, S; σ = 1.5, p = 1.0)
 P, C = [S], [SS]
 
-SpikingNeuralNetworks.monitor(SS, [(:g, [1])])
+SNN.monitor(SS, [(:g, [1])])
 
 A = 1.3 / 1.5; fr = 1 / 60ms
 f(t) = (A /1.0) * sin(1π * fr * t) +  (A / 2.0) * sin(2π * fr * t) +
@@ -16,4 +18,4 @@ for (i, t) in enumerate(ts)
     SpikingNeuralNetworks.train!(P, C, 0.1ms, t)
 end
 
-SpikingNeuralNetworks.vecplot(SS, :g); plot!(f.(ts)) |> gui
+SNN.vecplot(SS, :g); plot!(f.(ts))
