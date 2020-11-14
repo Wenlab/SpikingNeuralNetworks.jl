@@ -1,3 +1,4 @@
+ENV["GKSwstype"] = "nul"
 using Plots
 using SpikingNeuralNetworks
 SNN.@load_units
@@ -19,3 +20,4 @@ for (i, t) in enumerate(ts)
 end
 
 SNN.vecplot(SS, :g); plot!(f.(ts))
+png("results/pinning_net")
